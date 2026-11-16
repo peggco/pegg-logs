@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.pegg.dev/logo/light-32x32.png"
+    media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/png" sizes="64x64" href="https://cdn.pegg.dev/logo/light-64x64.png"
+    media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.pegg.dev/logo/dark-32x32.png"
+    media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/png" sizes="64x64" href="https://cdn.pegg.dev/logo/dark-64x64.png"
+    media="(prefers-color-scheme: dark)" />
+  <link rel="apple-touch-icon" href="https://cdn.pegg.dev/logo/light-bg-180x180.png" />
+  <title>Pegg Logs</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <picture class="brand-logo">
+        <source media="(prefers-color-scheme: dark)" srcset="https://cdn.pegg.dev/logo/dark-logo.png" />
+        <source media="(prefers-color-scheme: light)" srcset="https://cdn.pegg.dev/logo/light-logo.png" />
+        <img src="https://cdn.pegg.dev/logo/light-logo.png" alt="Pegg" width="128" />
+      </picture>
+      <div>
+        <h1>Pegg Logs</h1>
+        <p id="range-label" class="subtle">Loading…</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span id="status" class="status" role="status" aria-live="polite"></span>
+      <label class="check"><input id="auto-refresh" type="checkbox" checked><span>Auto refresh</span></label>
+      <a id="export-csv" class="btn" href="#" download>CSV</a>
+      <a id="export-json" class="btn btn-primary" href="#" download>JSON</a>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Filters">
+    <div class="level-checks" role="group" aria-label="Levels">
+      <label><input type="checkbox" value="DEBUG" checked> DEBUG</label>
+      <label><input type="checkbox" value="INFO" checked> INFO</label>
+      <label><input type="checkbox" value="WARN" checked> WARN</label>
+      <label><input type="checkbox" value="ERROR" checked> ERROR</label>
+    </div>
+    <div class="field search">
+      <label for="query">Search</label>
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input id="query" type="search" placeholder="Search messages…" autocomplete="off" spellcheck="false" aria-label="Search log messages">
+        <button id="clear-query" class="search-clear" type="button" aria-label="Clear search" hidden>×</button>
+        <kbd class="search-key" aria-hidden="true">/</kbd>
+      </div>
+    </div>
+    <label class="field"><span>Range</span>
+      <select id="days">
+        <option value="1">Last 24 hours</option>
+        <option value="7" selected>Last 7 days</option>
+        <option value="30">Last 30 days</option>
+        <option value="90">Last 90 days</option>
+        <option value="0">All time</option>
+      </select>
+    </label>
+    <label class="field"><span>From</span><input id="from" type="date" autocomplete="off"></label>
+    <label class="field"><span>To</span><input id="to" type="date" autocomplete="off"></label>
+    <label class="field"><span>Limit</span>
+      <select id="limit">
+        <option value="50">50</option>
+        <option value="100" selected>100</option>
+        <option value="250">250</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+      </select>
+    </label>
+    <button id="apply" class="btn btn-primary" type="button">Apply</button>
+    <button id="reset" class="btn" type="button">Reset</button>
+  </section>
+
+  <main>
+    <section class="cards" aria-label="Summary">
+      <article class="card"><span>Total</span><strong id="card-total">–</strong></article>
+      <article class="card"><span>Errors</span><strong id="card-error">–</strong></article>
+      <article class="card"><span>Warnings</span><strong id="card-warn">–</strong></article>
+      <article class="card"><span>Info</span><strong id="card-info">–</strong></article>
+      <article class="card"><span>Debug</span><strong id="card-debug">–</strong></article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Logs</h2><span id="table-note" class="subtle"></span></div>
+      <div class="table-wrap">
+        <table class="log-table">
+          <thead><tr><th>Time</th><th>Level</th><th>Message</th></tr></thead>
+          <tbody id="log-rows"></tbody>
+        </table>
+      </div>
+      <div id="empty" class="empty" hidden>No logs match these filters.</div>
+      <div class="pager">
+        <button id="prev" class="btn" type="button">Previous</button>
+        <span id="page-label">Page 1</span>
+        <button id="next" class="btn" type="button">Next</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

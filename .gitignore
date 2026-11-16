@@ -1,0 +1,40 @@
+# Build output
+/bin/
+/dist/
+/build/
+/out/
+/release/
+
+# Test and coverage output
+*.test
+*.out
+coverage.out
+
+# Local debug binaries
+debug
+/pegg-logs
+
+# Environment
+.env
+.env.local
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and temp
+*.log
+tmp/
+temp/
+
+# Go workspace
+go.work
+go.work.sum
+
+.pegg

@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release tag (for example v0.1.0)"
+        required: true
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    uses: peggco/pegg/.github/workflows/plugin-release.yml@v0.2.4
+    with:
+      binary: pegg-kanban
+      version: ${{ github.ref_type == 'tag' && github.ref_name || inputs.version }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
